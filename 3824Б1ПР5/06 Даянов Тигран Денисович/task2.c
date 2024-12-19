@@ -6,3 +6,39 @@ long long task2(unsigned A[], size_t n)
 {
   return -2;
 }
+
+#include <stdio.h>
+#include <limits.h>
+
+// Функция для поиска максимального значения среди локальных минимумов
+long long task2(unsigned A[], size_t n) {
+    if (n == 0) {
+        return -1; // Защита на случай, если массив окажется пустым 
+    }
+
+    long long max_local_min = -1; // Инициализируем результат как -1 (по условию отсутствия локальных минимумов)
+
+    for (size_t i = 0; i < n; i++) {
+        // Проверяем, является ли A[i] локальным минимумом
+        int is_local_min = 1;
+
+        // Проверка левого 
+        if (i > 0 && A[i] > A[i - 1]) {
+            is_local_min = 0;
+        }
+
+        // Проверка правого 
+        if (i < n - 1 && A[i] > A[i + 1]) {
+            is_local_min = 0;
+        }
+
+        // Если текущий элемент является локальным минимумом, обновляем максимум
+        if (is_local_min) {
+            if (max_local_min == -1 || A[i] > max_local_min) {
+                max_local_min = A[i];
+            }
+        }
+    }
+
+    return max_local_min;
+}
